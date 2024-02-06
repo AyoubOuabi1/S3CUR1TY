@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class AuthRequestDTO {
+public class AuthenticationRequest {
 
-    private String username;
-    private String password;
+  private String email;
+  String password;
 }
