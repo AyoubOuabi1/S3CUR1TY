@@ -8,7 +8,7 @@ import lombok.Data;
 public class AuthenticateDto {
     @NotNull
     @NotEmpty
-    private String username;
+    private String email;
 
     @NotNull
     @NotEmpty

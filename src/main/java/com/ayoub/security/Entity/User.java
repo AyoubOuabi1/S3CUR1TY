@@ -1,6 +1,5 @@
 package com.ayoub.security.Entity;
 
-import com.ayoub.security.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Builder
@@ -26,11 +25,27 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private Role role;
 
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    public Set<PermissionEntity> getPermissions() {
+        Set<PermissionEntity> permissions = new HashSet<>();
+        for (RoleEntity role : roles) {
+            permissions.addAll(role.getPermissions());
+        }
+        return permissions;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.addAll(roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName())).toList());
+        authorities.addAll(getPermissions().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getName())).toList());
+        return authorities;
     }
 
     @Override
