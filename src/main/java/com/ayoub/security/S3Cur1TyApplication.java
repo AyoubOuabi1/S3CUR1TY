@@ -40,7 +40,7 @@ public class S3Cur1TyApplication {
         return new CorsFilter(source);
     }
 
-    @Bean
+    /*@Bean
     CommandLineRunner configRunner(){
         return (args) -> {
             PermissionEntity createUserPermission = permissionService.savePermission(
@@ -77,5 +77,5 @@ public class S3Cur1TyApplication {
                        .build()
             );
         };
-    }
+    }*/
 }

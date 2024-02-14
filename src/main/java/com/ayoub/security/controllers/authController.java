@@ -20,13 +20,13 @@ public class authController {
     private final UserService userService;
 
     @PostMapping("register")
-    public ResponseEntity<MessageDto> register(@Valid @RequestBody RegisterDto registerDto) throws ValidationException{
+    public ResponseEntity<ResponseDto> register(@Valid @RequestBody RegisterDto registerDto) throws ValidationException{
         return ResponseEntity.ok(userService.register(registerDto));
     }
 
 
     @PostMapping("login")
-    public ResponseEntity<MessageDto> authenticate(@Valid @RequestBody AuthenticateDto authenticateDto){
+    public ResponseEntity<ResponseDto> authenticate(@Valid @RequestBody AuthenticateDto authenticateDto){
         return ResponseEntity.ok(userService.authenticate(authenticateDto));
     }
 
