@@ -42,7 +42,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.addAll(roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName())).toList());
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).toList());
         authorities.addAll(getPermissions().stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getName())).toList());
         return authorities;

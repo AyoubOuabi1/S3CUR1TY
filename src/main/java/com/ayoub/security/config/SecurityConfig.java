@@ -23,23 +23,6 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
- /*   @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.csrf()
-                    .disable()
-                    .authorizeHttpRequests()
-                    .requestMatchers("/api/auth/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
-                    .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
-                    .authenticationProvider(authenticationProvider)
-                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
-    }*/
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -47,8 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/auth/**")
                                 .permitAll()
-                                .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
-                                .requestMatchers("/api/v1/user/**").hasAnyRole("ADMIN","USER")
+                                .requestMatchers("/api/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/api/user/**").hasAnyRole("ADMIN","USER")
 
                                 .anyRequest()
                                 .authenticated()
